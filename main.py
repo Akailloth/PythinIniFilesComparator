@@ -41,6 +41,7 @@ def print_f():
     nouvelles_lignes_arr = []
     print("\n-------------------------------- NOUVELLES LIGNES --------------------------------")
     for section in sections:
+        nouvelles_lignes_arr.append("["+section+"]")
         for elem in elements_ajoutes:
             print('%s=%s' % (elem, new_config.get(section, elem)))
             nouvelles_lignes_arr.append(elem + "=" + new_config.get(section, elem))
@@ -51,11 +52,15 @@ def print_f():
         print("Pas de fichier output existant. \n")
     file = open("output.ini", "x")
     #remise à zéro du fichier
-    file.write("")
+    file.write("# Lignes à ajouter, avec la section à la quelle elles sont rattachées \n\n")
     for line in nouvelles_lignes_arr:
         file.write("".join(line) + "\n")
+    file.write("".join("\n"))
+    file.write("".join("# Ligne(s) a supprimer du fichier cible : ") + "\n")
+    for delete in elements_supprimes:
+        file.write("".join(delete) + "\n")
 
-    print("\nFichier output.txt créé")
+    print("\nFichier output.txt créé. \n")
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     print_f()
