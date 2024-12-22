@@ -4,6 +4,7 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 import configparser
+import os
 
 def print_f():
     #setup
@@ -37,11 +38,24 @@ def print_f():
     print('Nouveaux éléments : %s' % (elements_ajoutes))
     print('Éléments supprimés : %s' % (elements_supprimes))
 
+    nouvelles_lignes_arr = []
     print("\n-------------------------------- NOUVELLES LIGNES --------------------------------")
     for section in sections:
         for elem in elements_ajoutes:
             print('%s=%s' % (elem, new_config.get(section, elem)))
+            nouvelles_lignes_arr.append(elem + "=" + new_config.get(section, elem))
 
+    try:
+        os.remove("output.ini")
+    except:
+        print("Pas de fichier output existant. \n")
+    file = open("output.ini", "x")
+    #remise à zéro du fichier
+    file.write("")
+    for line in nouvelles_lignes_arr:
+        file.write("".join(line) + "\n")
+
+    print("\nFichier output.txt créé")
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     print_f()
